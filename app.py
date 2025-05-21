@@ -33,7 +33,7 @@ st.pyplot(fig1)
 # Distribution d'âge selon le sentiment
 st.subheader("Âge selon sentiment")
 fig2 = plt.figure()
-sns.boxplot(data=filtered_df, x='sentiment', y='Age', palette='coolwarm')
+sns.boxplot(data=filtered_df, x='sentiment', y='Age_numeric', palette='coolwarm')
 st.pyplot(fig2)
 
 # Exemples d'avis
