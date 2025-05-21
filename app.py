@@ -38,7 +38,7 @@ st.pyplot(fig2)
 
 # Exemples d'avis
 st.subheader("Exemples d'avis")
-sentiment_choisi = st.selectbox("Choisissez un type d'avis :", ['Positif', 'Negatif'])
+sentiment_choisi = st.selectbox("Choisissez un type d'avis :", ['Positif', 'Négatif'])
 
 avis_filtrés = df[df['sentiment'] == sentiment_choisi]
 
