@@ -26,19 +26,25 @@ filtered_df = df[
 
 # Visualisation des sentiments
 st.subheader("Répartition des sentiments")
-fig1 = plt.figure()
+fig1 = plt.figure(figsize=(5, 3))
 sns.countplot(data=filtered_df, x='sentiment', palette='pastel')
 st.pyplot(fig1)
 
 # Distribution d'âge selon le sentiment
 st.subheader("Âge selon sentiment")
-fig2 = plt.figure()
+fig2 = plt.figure(figsize=(5, 3))
 sns.boxplot(data=filtered_df, x='sentiment', y='Age_numeric', palette='coolwarm')
 st.pyplot(fig2)
 
 # Exemples d'avis
 st.subheader("Exemples d'avis")
-for i, row in filtered_df[['description-text', 'sentiment']].sample(3).iterrows():
+sentiment_choisi = st.selectbox("Choisissez un type d'avis :", ['Positif', 'Negatif'])
+
+avis_filtrés = df[df['sentiment'] == sentiment_choisi]
+
+st.subheader(f"Exemples d'avis {sentiment_choisi.lower()}s")
+for i, row in avis_filtrés[['description-text', 'sentiment']].sample(3, random_state=1).iterrows():
     st.markdown(f"**Sentiment**: {row['sentiment']}")
     st.write(row['description-text'])
     st.markdown("---")
+
