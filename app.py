@@ -87,7 +87,8 @@ with tab2:
    
 
     # --- LDA ---
-    st.write("LDA :")
+    st.write("### LDA :")
+    
     # Vectorisation avec CountVectorizer
     vectorizer = CountVectorizer(max_df=0.95, min_df=2, stop_words='english')
     X = vectorizer.fit_transform(texts)
@@ -97,26 +98,25 @@ with tab2:
     lda = LatentDirichletAllocation(n_components=n_topics, random_state=42)
     lda.fit(X)
     
-    # Affichage des mots clés par topic LDA
+    # Fonction d'affichage des mots clés par topic LDA
     def display_topics(model, feature_names, no_top_words):
         for topic_idx, topic in enumerate(model.components_):
-            print(f"Topic {topic_idx}:")
-            print(" ".join([feature_names[i] for i in topic.argsort()[:-no_top_words - 1:-1]]))
+            st.write(f"**Topic {topic_idx}:**")
+            st.write(" ".join([feature_names[i] for i in topic.argsort()[:-no_top_words - 1:-1]]))
     
-    print("Topics LDA:")
+    st.write("#### Topics LDA:")
     display_topics(lda, vectorizer.get_feature_names_out(), 10)
     
     # --- BERTopic ---
-    st.write("BERTopic :")
-    # Optionnel : on peut passer un modèle sentence-transformers plus adapté
+    st.write("### BERTopic :")
     embedding_model = SentenceTransformer("all-MiniLM-L6-v2")
     
     topic_model = BERTopic(embedding_model=embedding_model, nr_topics=n_topics)
     topics, probs = topic_model.fit_transform(texts)
     
-    print("Topics BERTopic:")
-    print(topic_model.get_topic_info())
+    st.write("#### Topics BERTopic:")
+    st.dataframe(topic_model.get_topic_info())
     
-    # Affichage des mots clés pour le premier topic
-    print("Mots clés du premier topic BERTopic:")
-    print(topic_model.get_topic(0))
+    st.write("#### Mots clés du premier topic BERTopic:")
+    st.write(topic_model.get_topic(0))
+
