@@ -24,17 +24,21 @@ filtered_df = df[
     (df['Condition'].isin(condition_filter))
 ]
 
+col1, col2 = st.columns(2)
+
 # Visualisation des sentiments
-st.subheader("Répartition des sentiments")
-fig1 = plt.figure(figsize=(5, 3))
-sns.countplot(data=filtered_df, x='sentiment', palette='pastel')
-st.pyplot(fig1)
+with col1:
+    st.subheader("Répartition des sentiments")
+    fig1 = plt.figure(figsize=(5, 3))
+    sns.countplot(data=filtered_df, x='sentiment', palette='pastel')
+    st.pyplot(fig1)
 
 # Distribution d'âge selon le sentiment
-st.subheader("Âge selon sentiment")
-fig2 = plt.figure(figsize=(5, 3))
-sns.boxplot(data=filtered_df, x='sentiment', y='Age_numeric', palette='coolwarm')
-st.pyplot(fig2)
+with col2:
+    st.subheader("Âge selon sentiment")
+    fig2 = plt.figure(figsize=(5, 3))
+    sns.boxplot(data=filtered_df, x='sentiment', y='Age_numeric', palette='coolwarm')
+    st.pyplot(fig2)
 
 # Exemples d'avis
 st.subheader("Exemples d'avis")
