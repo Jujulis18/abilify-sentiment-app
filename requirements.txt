@@ -2,3 +2,6 @@ pandas
 matplotlib
 seaborn
 streamlit
+bertopic
+scikit-learn
+sentence-transformers
