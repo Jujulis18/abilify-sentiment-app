@@ -12,7 +12,7 @@ st.title("Analyse des avis patients sur l'Abilify")
 st.markdown("Explorez les avis patients selon l’âge, le genre, et les conditions médicales.")
 
 # Filtres utilisateur
-age_range = st.slider("Filtrer par âge", int(df['Age'].min()), int(df['Age_numeric'].max()), (20, 60))
+age_range = st.slider("Filtrer par âge", int(df['Age_numeric'].min()), int(df['Age_numeric'].max()), (20, 60))
 gender_filter = st.multiselect("Genre", options=df['Gender'].unique(), default=df['Gender'].unique())
 condition_filter = st.multiselect("Condition médicale", options=df['Condition'].dropna().unique(), default=df['Condition'].dropna().unique()[:5])
 
