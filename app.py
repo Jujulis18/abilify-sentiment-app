@@ -87,7 +87,7 @@ with tab2:
    
 
     # --- LDA ---
-     st.write("LDA :")
+    st.write("LDA :")
     # Vectorisation avec CountVectorizer
     vectorizer = CountVectorizer(max_df=0.95, min_df=2, stop_words='english')
     X = vectorizer.fit_transform(texts)
@@ -107,7 +107,7 @@ with tab2:
     display_topics(lda, vectorizer.get_feature_names_out(), 10)
     
     # --- BERTopic ---
-     st.write("BERTopic :")
+    st.write("BERTopic :")
     # Optionnel : on peut passer un modèle sentence-transformers plus adapté
     embedding_model = SentenceTransformer("all-MiniLM-L6-v2")
     
