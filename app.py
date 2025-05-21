@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 st.set_page_config(page_title="Sentiment Analyse - Abilify", layout="wide")
 
 # 📥 Chargement des données
-df = pd.read_csv("reviews_cleaned.csv")
+df = pd.read_csv("data/reviews_cleaned.csv")
 
 st.title("Analyse des avis patients sur l'Abilify")
 st.markdown("Explorez les avis patients selon l’âge, le genre, et les conditions médicales.")
