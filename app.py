@@ -110,6 +110,14 @@ with tab2:
         return topics
     
     topics_keywords = get_lda_topics(lda, vectorizer.get_feature_names_out())
+
+    # debug
+    print("Nombre de lignes dans df :", len(df))
+    print("Nombre de textes :", len(texts))
+
+    print(df[df["cleaned_text"].isna()])
+    print(df.index.duplicated().sum())
+
     
     # --- Affectation des topics aux documents ---
     doc_topics = lda.transform(X)
