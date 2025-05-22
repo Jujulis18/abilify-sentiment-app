@@ -155,6 +155,8 @@ with tab2:
     # topic_model = BERTopic(embedding_model=embedding_model, nr_topics=n_topics)
     topic_model = BERTopic(embedding_model=embedding_model, nr_topics="auto", verbose=True)
     topics, probs = topic_model.fit_transform(texts)
+
+    df["bertopic_topic"] = topics
     
     st.write("#### Topics BERTopic:")
     st.dataframe(topic_model.get_topic_info())
@@ -169,9 +171,18 @@ with tab2:
     }
 
     st.title("Insights BERTopic")
+
+    def generate_bertopic_label(keywords):
+        return ", ".join([word for word, _ in keywords[:3]])
+    
+    topic_labels = {
+        topic_id: generate_bertopic_label(keywords)
+        for topic_id, keywords in topic_keywords.items()
+    }
     
     for topic_id, keywords in topic_keywords.items():
-        st.subheader(f"Topic {topic_id}")
+        st.subheader(f"Topic {topic_id} : {topic_labels[topic_id]}")
+
         
         # Liste des mots-clés
         keyword_list = [word for word, _ in keywords]
@@ -184,4 +195,6 @@ with tab2:
             st.write(f"- {text}")
         
         st.markdown("---")
+
+    
 
