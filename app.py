@@ -130,19 +130,6 @@ with tab2:
     
     for topic_num, keywords in enumerate(topics_keywords):
         st.markdown(f"### 🔹 Topic {topic_num}")
-        
-        # Étiquette manuelle (à adapter selon tes observations)
-        labels = {
-            0: "💊 Effets secondaires : nausée, fatigue",
-            1: "⚖️ Prise de poids",
-            2: "😔 Sentiment de mal-être",
-            3: "😊 Amélioration de l'humeur",
-            4: "🧠 Symptômes psychiatriques",
-            5: "💤 Troubles du sommeil",
-            6: "📉 Inefficacité du traitement",
-            7: "⏱️ Effets au long cours",
-        }
-        st.write(f"**Étiquette** : {labels.get(topic_num, 'Non étiqueté')}")
     
         st.write(f"**Mots-clés** : {', '.join(keywords)}")
     
@@ -172,6 +159,29 @@ with tab2:
     st.write("#### Topics BERTopic:")
     st.dataframe(topic_model.get_topic_info())
     
-    st.write("#### Mots clés du premier topic BERTopic:")
-    st.write(topic_model.get_topic(0))
+    topics_info = topic_model.get_topic_info()  # dataframe avec tous les topics
+
+    # Récupère les mots-clés par topic (sauf topic -1)
+    topic_keywords = {
+        topic_id: topic_model.get_topic(topic_id)
+        for topic_id in topics_info["Topic"].values
+        if topic_id != -1
+    }
+
+    st.title("Insights BERTopic")
+    
+    for topic_id, keywords in topic_keywords.items():
+        st.subheader(f"Topic {topic_id}")
+        
+        # Liste des mots-clés
+        keyword_list = [word for word, _ in keywords]
+        st.write("**Mots-clés :**", ", ".join(keyword_list))
+        
+        # Exemples d'avis du topic
+        topic_docs = df[df["bertopic_topic"] == topic_id]["description-text"].sample(min(3, len(df[df["bertopic_topic"] == topic_id])))
+        st.write("**Exemples d'avis :**")
+        for text in topic_docs:
+            st.write(f"- {text}")
+        
+        st.markdown("---")
 
