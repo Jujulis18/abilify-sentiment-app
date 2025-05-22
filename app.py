@@ -69,11 +69,11 @@ with tab2:
     
     # Nettoyage
     df_cleaned = df[df["description-text"].notnull()]
-    texts = df_cleaned["description-text"].tolist()
+    textsBert = df_cleaned["description-text"].tolist()
     
     # Création du modèle
     topic_model = BERTopic(language="english")
-    topics, probs = topic_model.fit_transform(texts)
+    topics, probs = topic_model.fit_transform(textsBert)
     
     # Visualisation des top topics
     topic_info = topic_model.get_topic_info()
