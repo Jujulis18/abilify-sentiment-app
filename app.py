@@ -90,10 +90,6 @@ with tab2:
     # --- LDA ---
     st.write("### LDA :")
     
-    # Vectorisation avec CountVectorizer
-    vectorizer = CountVectorizer(max_df=0.95, min_df=2, stop_words='english')
-    X = vectorizer.fit_transform(texts)
-    
     # Modèle LDA
     n_topics = 8
     vectorizer = CountVectorizer(max_df=0.95, min_df=2, stop_words="english")
@@ -101,6 +97,9 @@ with tab2:
     
     lda = LatentDirichletAllocation(n_components=n_topics, random_state=42)
     lda.fit(X)
+
+    df = df.dropna(subset=["cleaned_text"]).reset_index(drop=True)
+    texts = df["cleaned_text"].tolist()
     
     # --- Extraction des mots-clés par topic ---
     def get_lda_topics(model, feature_names, n_words=10):
