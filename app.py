@@ -68,22 +68,22 @@ with tab2:
     from sklearn.feature_extraction.text import ENGLISH_STOP_WORDS
     
     # Nettoyage
-    df_cleaned = df[df["description-text"].notnull()]
-    textsBert = df_cleaned["description-text"].tolist()
+    #df_cleaned = df[df["description-text"].notnull()]
+    #textsBert = df_cleaned["description-text"].tolist()
     
     # Création du modèle
-    topic_model = BERTopic(language="english")
-    topics, probs = topic_model.fit_transform(textsBert)
+    #topic_model = BERTopic(language="english")
+    #topics, probs = topic_model.fit_transform(textsBert)
     
     # Visualisation des top topics
-    topic_info = topic_model.get_topic_info()
-    st.write("📌 Thèmes détectés :")
-    st.dataframe(topic_info.head(10))
+    #topic_info = topic_model.get_topic_info()
+    #st.write("📌 Thèmes détectés :")
+    #st.dataframe(topic_info.head(10))
     
     # Affichage des termes fréquents pour un thème donné
-    selected_topic = st.selectbox("Choisir un thème", topic_info["Topic"].values)
-    if selected_topic != -1:
-        st.write(topic_model.get_topic(selected_topic))
+    #selected_topic = st.selectbox("Choisir un thème", topic_info["Topic"].values)
+    #if selected_topic != -1:
+    #    st.write(topic_model.get_topic(selected_topic))
 
    
 
@@ -92,14 +92,16 @@ with tab2:
     
     # Modèle LDA
     n_topics = 8
+    df = df.dropna(subset=["clean_review"]).reset_index(drop=True)
+    texts = df["clean_review"].tolist()
+
     vectorizer = CountVectorizer(max_df=0.95, min_df=2, stop_words="english")
     X = vectorizer.fit_transform(texts)
     
     lda = LatentDirichletAllocation(n_components=n_topics, random_state=42)
     lda.fit(X)
 
-    df = df.dropna(subset=["clean_review"]).reset_index(drop=True)
-    texts = df["clean_review"].tolist()
+   
     
     # --- Extraction des mots-clés par topic ---
     def get_lda_topics(model, feature_names, n_words=10):
