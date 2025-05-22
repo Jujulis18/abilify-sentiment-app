@@ -98,8 +98,8 @@ with tab2:
     lda = LatentDirichletAllocation(n_components=n_topics, random_state=42)
     lda.fit(X)
 
-    df = df.dropna(subset=["cleaned_text"]).reset_index(drop=True)
-    texts = df["cleaned_text"].tolist()
+    df = df.dropna(subset=["clean_review"]).reset_index(drop=True)
+    texts = df["clean_review"].tolist()
     
     # --- Extraction des mots-clés par topic ---
     def get_lda_topics(model, feature_names, n_words=10):
@@ -115,7 +115,6 @@ with tab2:
     doc_topics = lda.transform(X)
     df["topic"] = doc_topics.argmax(axis=1)
     
-    # --- Interface Streamlit ---
     st.title("Problèmes identifiés (LDA)")
     st.markdown("Explorez les sujets récurrents dans les avis des patients.")
     
