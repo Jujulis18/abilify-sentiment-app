@@ -148,7 +148,7 @@ with tab2:
         words = text.lower().split()
         return " ".join([w for w in words if w not in ENGLISH_STOP_WORDS and len(w) > 2])
 
-    df["cleaned_text"] = df["description-text"].apply(clean_text)
+    df["cleaned_review"] = df["cleaned_review"].apply(clean_text)
 
     embedding_model = SentenceTransformer("all-MiniLM-L12-v2")
     
