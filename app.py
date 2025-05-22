@@ -65,6 +65,7 @@ with tab2:
     import pandas as pd
     from sklearn.decomposition import LatentDirichletAllocation
     from sentence_transformers import SentenceTransformer
+    from sklearn.feature_extraction.text import ENGLISH_STOP_WORDS
     
     # Nettoyage
     df_cleaned = df[df["description-text"].notnull()]
@@ -95,23 +96,69 @@ with tab2:
     
     # Modèle LDA
     n_topics = 8
+    vectorizer = CountVectorizer(max_df=0.95, min_df=2, stop_words="english")
+    X = vectorizer.fit_transform(texts)
+    
     lda = LatentDirichletAllocation(n_components=n_topics, random_state=42)
     lda.fit(X)
     
-    # Fonction d'affichage des mots clés par topic LDA
-    def display_topics(model, feature_names, no_top_words):
+    # --- Extraction des mots-clés par topic ---
+    def get_lda_topics(model, feature_names, n_words=10):
+        topics = []
         for topic_idx, topic in enumerate(model.components_):
-            st.write(f"**Topic {topic_idx}:**")
-            st.write(" ".join([feature_names[i] for i in topic.argsort()[:-no_top_words - 1:-1]]))
+            keywords = [feature_names[i] for i in topic.argsort()[:-n_words - 1:-1]]
+            topics.append(keywords)
+        return topics
     
-    st.write("#### Topics LDA:")
-    display_topics(lda, vectorizer.get_feature_names_out(), 10)
+    topics_keywords = get_lda_topics(lda, vectorizer.get_feature_names_out())
     
+    # --- Affectation des topics aux documents ---
+    doc_topics = lda.transform(X)
+    df["topic"] = doc_topics.argmax(axis=1)
+    
+    # --- Interface Streamlit ---
+    st.title("Problèmes identifiés (LDA)")
+    st.markdown("Explorez les sujets récurrents dans les avis des patients.")
+    
+    for topic_num, keywords in enumerate(topics_keywords):
+        st.markdown(f"### 🔹 Topic {topic_num}")
+        
+        # Étiquette manuelle (à adapter selon tes observations)
+        labels = {
+            0: "💊 Effets secondaires : nausée, fatigue",
+            1: "⚖️ Prise de poids",
+            2: "😔 Sentiment de mal-être",
+            3: "😊 Amélioration de l'humeur",
+            4: "🧠 Symptômes psychiatriques",
+            5: "💤 Troubles du sommeil",
+            6: "📉 Inefficacité du traitement",
+            7: "⏱️ Effets au long cours",
+        }
+        st.write(f"**Étiquette** : {labels.get(topic_num, 'Non étiqueté')}")
+    
+        st.write(f"**Mots-clés** : {', '.join(keywords)}")
+    
+        # Avis représentatifs
+        examples = df[df["topic"] == topic_num]["description-text"].dropna().sample(min(3, len(df[df["topic"] == topic_num])), random_state=42)
+        for example in examples:
+            st.markdown(f"> {example.strip()}")
+        
+        st.markdown("---")
+        
     # --- BERTopic ---
     st.write("### BERTopic :")
-    embedding_model = SentenceTransformer("all-MiniLM-L6-v2")
+
+
+    def clean_text(text):
+        words = text.lower().split()
+        return " ".join([w for w in words if w not in ENGLISH_STOP_WORDS and len(w) > 2])
+
+    df["cleaned_text"] = df["description-text"].apply(clean_text)
+
+    embedding_model = SentenceTransformer("all-MiniLM-L12-v2")
     
-    topic_model = BERTopic(embedding_model=embedding_model, nr_topics=n_topics)
+    # topic_model = BERTopic(embedding_model=embedding_model, nr_topics=n_topics)
+    topic_model = BERTopic(embedding_model=embedding_model, nr_topics="auto", verbose=True)
     topics, probs = topic_model.fit_transform(texts)
     
     st.write("#### Topics BERTopic:")
