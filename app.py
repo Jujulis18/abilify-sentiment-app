@@ -115,7 +115,7 @@ with tab2:
     print("Nombre de lignes dans df :", len(df))
     print("Nombre de textes :", len(texts))
 
-    print(df[df["cleaned_text"].isna()])
+    print(df[df["clean_review"].isna()])
     print(df.index.duplicated().sum())
 
     
