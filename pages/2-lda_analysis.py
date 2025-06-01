@@ -10,7 +10,7 @@ from modules.preprocessing.lda_analyzer import (
     assign_topics_to_documents, 
     get_topic_examples
 )
-from utils import handle_empty_dataframe
+from modules.utils import handle_empty_dataframe
 
 st.set_page_config(page_title="Analyse LDA - Topics", layout="wide")
 

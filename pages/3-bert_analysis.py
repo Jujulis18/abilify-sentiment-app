@@ -11,7 +11,7 @@ from modules.preprocessing.bert_analyzer import (
     assign_bert_topics_to_documents,
     get_bert_topic_examples
 )
-from utils import handle_empty_dataframe, clean_text
+from modules.utils import handle_empty_dataframe, clean_text
 
 st.set_page_config(page_title="Analyse BERTopic", layout="wide")
 
