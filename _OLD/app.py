@@ -3,7 +3,7 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 
-st.set_page_config(page_title="Sentiment Analyse - Abilify", layout="wide")
+#st.set_page_config(page_title="Sentiment Analyse - Abilify", layout="wide")
 
 # 📥 Chargement des données
 df = pd.read_csv("data/reviews_cleaned.csv")
