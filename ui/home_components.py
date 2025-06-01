@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-from preprocessing.data_filter import filter_data
+from modules.preprocessing.data_filter import filter_data
 from .common_components import (
     create_info_box, 
     create_metric_card, 
