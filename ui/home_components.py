@@ -23,10 +23,10 @@ def display_navigation_info():
         content="""
         Utilisez la barre latérale pour accéder aux différentes analyses :
         
-        • **Sentiment Analysis** : Analyse des sentiments des avis patients
-        • **Topic Modeling** : Découverte des thèmes principaux (LDA & BERTopic)
+        • Sentiment Analysis : Analyse des sentiments des avis patients
+        • Topic Modeling : Découverte des thèmes principaux (LDA & BERTopic)
         
-        *Les données filtrées sur cette page seront utilisées dans toutes les analyses.*
+        Les données filtrées sur cette page seront utilisées dans toutes les analyses.
         """,
         box_type="info"
     )
