@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 from modules.preprocessing.data_filter import filter_data
 from .common_components import ( 
+    create_info_box,
     create_metric_card, 
     create_section_header,
     display_dataframe_with_info,
@@ -17,18 +18,17 @@ def display_main_header():
     )
 
 def display_navigation_info():
-    st.markdown("""
-        <div style="padding: 1rem; border: 1px solid #e1e5e9; border-radius: 0.5rem; background-color: #f8f9fa;">
-            <h4>🧭 Navigation</h4>
-            <p>Utilisez la barre latérale pour accéder aux différentes analyses :</p>
-            <ul>
-                <li><strong>Sentiment Analysis</strong> : Analyse des sentiments des avis patients</li>
-                <li><strong>Topic Modeling</strong> : Découverte des thèmes principaux (LDA & BERTopic)</li>
-            </ul>
-            <p><em>Les données filtrées sur cette page seront utilisées dans toutes les analyses.</em></p>
-        </div>
-        """, 
-        unsafe_allow_html=True
+    create_info_box(
+        title="🧭 Navigation",
+        content="""
+        Utilisez la barre latérale pour accéder aux différentes analyses :
+        
+        • **Sentiment Analysis** : Analyse des sentiments des avis patients
+        • **Topic Modeling** : Découverte des thèmes principaux (LDA & BERTopic)
+        
+        *Les données filtrées sur cette page seront utilisées dans toutes les analyses.*
+        """,
+        box_type="info"
     )
 
 
