@@ -6,8 +6,8 @@ def load_data(path):
 
 def clean_age(df):
     """Nettoie la colonne Age en supprimant les espaces et les valeurs nulles"""
-    df['Age'] = df['Age'].str.strip()
-    df = df[df['Age'].notna()]
+    df['Age_numeric'] = df['Age_numeric'].str.strip()
+    df = df[df['Age_numeric'].notna()]
     return df
 
 def get_data_ranges(df):
