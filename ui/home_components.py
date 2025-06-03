@@ -18,18 +18,17 @@ def display_main_header():
     )
 
 def display_navigation_info():
-    create_info_box(
-        title="🧭 Navigation",
-        content="""
+    st.markdown("""
+    <div style="padding: 1rem; border: 1px solid #e1e5e9; border-radius: 0.5rem; background-color: #f8f9fa;">
+        <h4>🧭 Navigation</h4>
         <p>Utilisez la barre latérale pour accéder aux différentes analyses :</p>
         <ul>
             <li><strong>Sentiment Analysis</strong> : Analyse des sentiments des avis patients</li>
             <li><strong>Topic Modeling</strong> : Découverte des thèmes principaux (LDA & BERTopic)</li>
         </ul>
         <p><em>Les données filtrées sur cette page seront utilisées dans toutes les analyses.</em></p>
-        """,
-        box_type="info"
-    )
+    </div>
+    """, unsafe_allow_html=True)
 
 def display_data_overview(df, ranges):
     """
@@ -208,7 +207,7 @@ def display_sample_data(df):
     create_section_header("📋 Échantillon des Données", "Aperçu des données sélectionnées")
     
     # Colonnes à afficher en priorité
-    priority_columns = ['Age', 'Gender', 'Condition', 'description-text']
+    priority_columns = ['Age_numeric', 'Gender', 'Condition', 'description-text']
     available_columns = [col for col in priority_columns if col in df.columns]
     
     if not available_columns:
@@ -237,7 +236,7 @@ def display_sample_data(df):
     col1, col2, col3 = create_columns_layout([1, 1, 1])
     
     with col1:
-        if 'Age' in df.columns:
+        if 'Age_numeric' in df.columns:
             create_metric_card(
                 title="Âge Moyen",
                 value=f"{df['Age_numeric'].mean():.1f} ans" if 'Age_numeric' in df.columns else "N/A"
@@ -258,32 +257,3 @@ def display_sample_data(df):
                 value=df['Condition'].nunique()
             )
 
-def display_analysis_instructions(filtered_df):
-    """
-    Affiche les instructions pour procéder aux analyses
-    
-    Args:
-        filtered_df: DataFrame des données filtrées
-    """
-    if not filtered_df.empty:
-        create_info_box(
-            title="🚀 Prêt pour l'Analyse",
-            content="""
-            <p><strong>Vos données sont prêtes !</strong> Utilisez la barre latérale pour accéder aux analyses :</p>
-            <ul>
-                <li>📊 <strong>Sentiment Analysis</strong> : Découvrez la répartition des sentiments</li>
-                <li>🔍 <strong>Topic Modeling</strong> : Identifiez les thèmes principaux avec LDA et BERTopic</li>
-            </ul>
-            <p><em>Les filtres appliqués seront automatiquement utilisés dans toutes les analyses.</em></p>
-            """,
-            box_type="success"
-        )
-    else:
-        create_info_box(
-            title="Ajustez vos Filtres",
-            content="""
-            <p>Aucune donnée ne correspond aux critères actuels.</p>
-            <p>Essayez d'élargir vos critères de filtrage pour obtenir des résultats.</p>
-            """,
-            box_type="warning"
-        )
