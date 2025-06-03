@@ -37,7 +37,7 @@ Cela a permis de visualiser les tendances par tranche d’âge, genre, ou condit
 
 ## 🧵 Extraction de thématiques
 
-Deux approches ont été testées pour identifier les thèmes récurrents dans les textes :
+Deux approches ont été testées pour identifier les thèmes récurrents dans les textes sachant que l'on est sur des méthodes non-supervisés : 
 
 ### 1. LDA (Latent Dirichlet Allocation)
 
