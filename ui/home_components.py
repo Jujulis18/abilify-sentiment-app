@@ -26,7 +26,6 @@ def display_navigation_info():
         • Sentiment Analysis : Analyse des sentiments des avis patients
         • Topic Modeling : Découverte des thèmes principaux (LDA & BERTopic)
         
-        Les données filtrées sur cette page seront utilisées dans toutes les analyses.
         """,
         box_type="info"
     )
