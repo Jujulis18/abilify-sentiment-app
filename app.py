@@ -22,7 +22,7 @@ load_custom_css()
 def load_and_process_data():
     try:
         df = load_data('data/reviews_cleaned.csv')
-        df = clean_age(df)
+        # df = clean_age(df)
         
         # Calcul des métriques globales
         ranges = get_data_ranges(df)
