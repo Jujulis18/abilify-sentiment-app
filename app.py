@@ -7,8 +7,7 @@ from ui.home_components import (
     display_navigation_info,
     display_data_overview,
     display_data_filters,
-    display_sample_data,
-    display_analysis_instructions
+    display_sample_data
 )
 
 from modules.preprocessing.data_loader import load_data, clean_age, get_data_ranges
@@ -59,8 +58,7 @@ def main():
     
     st.divider()
     display_sample_data(filtered_df)
-    st.divider()
-    display_analysis_instructions(filtered_df)
+    
 
 if __name__ == "__main__":
     main()
