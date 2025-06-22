@@ -47,7 +47,7 @@ Deux approches ont été testées pour identifier les thèmes récurrents dans l
 - Des exemples d’avis représentatifs sont présentés pour chaque sujet
 
 #### Fonctionnement du modèle :
-LDA analyse la cooccurrence des mots dans les documents pour découvrir des groupes de termes qui reviennent souvent ensemble. Ces groupes représentent des thèmes latents.
+LDA analyse la répétabilité des mots dans les documents pour découvrir des groupes de termes qui reviennent souvent ensemble. 
 
 🔍 **Limite** : 
 - LDA ne comprend pas le sens des mots (pas de contexte), il ne fait qu’analyser des fréquences. Il fonctionne donc mieux sur des textes longs et bien structurés.
@@ -59,7 +59,7 @@ LDA analyse la cooccurrence des mots dans les documents pour découvrir des grou
 
 #### Fonctionnement du modèle :
 BERTopic est un modèle de clustering de textes basé sur l'encodage sémantique (via BERT ou SentenceTransformer).
-Il convertit chaque avis en un vecteur qui capture son sens global (grâce au contexte), puis groupe ces vecteurs pour identifier des topics sémantiques.
+Il convertit chaque avis en un vecteur qui capture son sens global, puis groupe ces vecteurs pour identifier des topics récurrents.
 
 📌 **Amélioration proposée** :
 Pour une analyse plus fine, il est envisageable de :
