@@ -104,12 +104,3 @@ pip install -r requirements.txt
 streamlit run app.py
 ```
 
----
-
-
----
-
-## 📬 Contact
-
-Projet réalisé dans le cadre d’un portfolio de data science appliqué au domaine médical.  
-Pour toute remarque ou suggestion, n'hésitez pas à me contacter !
