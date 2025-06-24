@@ -1,106 +1,63 @@
+# Analyse des avis patients sur l’Abilify
 
-# 🧠 Analyse des avis patients sur l’Abilify
+## Contexte
+Dans le cadre de l'analyse des retours d'expérience des patients concernant le médicament Abilify (aripiprazole), j'ai été chargé d'explorer les avis textuels des patients. L'objectif était d'identifier automatiquement les sentiments exprimés et d'extraire les problèmes récurrents, effets secondaires ou suggestions via des méthodes de traitement du langage naturel (NLP).
 
-Ce projet explore les retours d'expérience de patients concernant le médicament Abilify (aripiprazole), en analysant leurs avis textuels à l'aide de traitements NLP classiques et modernes. L’objectif est double :
-- Identifier automatiquement les sentiments exprimés (positifs / négatifs).
-- Extraire les problèmes récurrents, effets secondaires ou suggestions via topic modeling (LDA & BERTopic).
+## Objectifs
+- **Objectifs principaux** :
+  - Identifier automatiquement les sentiments exprimés (positifs / négatifs).
+  - Extraire les problèmes récurrents, effets secondaires ou suggestions via topic modeling (LDA & BERTopic).
+- **Objectifs secondaires** :
+  - Développer une interface interactive sous Streamlit pour visualiser les résultats.
+  - Comparer les performances des méthodes classiques et modernes de NLP.
 
-L’application est disponible via une interface interactive sous Streamlit, incluant des filtres par âge, genre et condition médicale : [Interface Streamlit](https://bvx9kwtgop7okgxpkwv624.streamlit.app/)
+## Méthodologie
+- **Outils et technologies utilisés** :
+  - Python
+  - Streamlit pour le dashboard interactif
+  - scikit-learn pour LDA et preprocessing
+  - BERTopic pour la détection de thématiques avancées
+  - Sentence-Transformers pour l’encodage sémantique
+  - Seaborn / Matplotlib pour les visualisations
 
-## 🧰 Data
-Dataset récupéré sur Kaggle: [Abilify-oral-reviews-dataset](https://www.kaggle.com/datasets/joyshil0599/abilify-oral-reviews-dataset?resource=download)
-incluant description-text, age, gender, condition, sentiment, etc.
+- **Processus** :
+  1. Récupération du dataset sur Kaggle : Abilify-oral-reviews-dataset incluant description-text, age, gender, condition, sentiment, etc.
+  2. Classification des avis en “Positif” ou “Négatif” en analysant les colonnes de notation globale (overall-rating).
+  3. Visualisation des tendances par tranche d’âge, genre, ou condition.
+  4. Extraction de thématiques en utilisant LDA et BERTopic.
+  5. Analyse des résultats et identification des thèmes récurrents.
 
-## 🧰 Tech Stack
+## Analyse et Résultats
+- **Analyse des données** :
+  - Classification des avis en positifs, négatifs et neutres basée sur les notes globales.
+  - Visualisation des tendances par tranche d’âge, genre, ou condition.
+- **Résultats obtenus** :
+  - Identification de thématiques récurrentes telles que les troubles du sommeil, la prise de poids, et le dosage trop important.
+  - Observation de différences notables dans la perception du médicament selon les groupes démographiques.
+  - **Limites des modèles** :
+    - **LDA (Latent Dirichlet Allocation)** : LDA est une approche probabiliste classique qui analyse la répétabilité des mots dans les documents pour découvrir des groupes de termes qui reviennent souvent ensemble. Il ne comprend pas le sens des mots (pas de contexte), il ne fait qu’analyser des fréquences. Il fonctionne donc mieux sur des textes longs et bien structurés. Les topics restent parfois trop généraux, mélangeant symptômes et effets indésirables.
+    - **BERTopic** : BERTopic est un modèle de clustering de textes basé sur l'encodage sémantique (via BERT ou SentenceTransformer). Il convertit chaque avis en un vecteur qui capture son sens global, puis groupe ces vecteurs pour identifier des topics récurrents. Il peut mélanger des opinions opposées dans un même cluster. La classification positive/négative repose sur une simple règle de seuil de note, ce qui peut limiter la précision des résultats.
 
-- [Python](https://www.python.org/)
-- [Streamlit](https://streamlit.io/) pour le dashboard interactif
-- [scikit-learn](https://scikit-learn.org/) pour LDA et preprocessing
-- [BERTopic](https://maartengr.github.io/BERTopic/) pour la détection de thématiques avancées
-- [Sentence-Transformers](https://www.sbert.net/) pour l’encodage sémantique
-- [Seaborn / Matplotlib](https://seaborn.pydata.org/) pour les visualisations
+## Impact Business
+- **Valeur ajoutée** :
+  - Meilleure compréhension des retours patients sur l'Abilify.
+  - Identification des problèmes récurrents et des effets secondaires pour améliorer le médicament.
+- **Recommandations** :
+  - Utiliser un modèle de sentiment pré-entraîné pour classer chaque phrase individuellement.
+  - Appliquer BERTopic uniquement sur les avis négatifs pour mieux identifier les problèmes majeurs.
+  - Étiqueter manuellement un sous-ensemble pour un finetuning supervisé.
 
----
+## Conclusion
+- **Résumé** :
+  - Le projet a permis d'identifier des thématiques récurrentes et des différences notables dans la perception du médicament selon les groupes démographiques.
+  - Les méthodes de NLP classiques et modernes ont été comparées pour extraire des informations pertinentes des avis patients.
+- **Leçons apprises** :
+  - L'importance de combiner différentes méthodes de NLP pour obtenir des résultats plus précis.
+  - La nécessité de continuer à améliorer les modèles pour mieux comprendre les retours patients.
 
-## 📊 Analyse de sentiment
-
-Une première étape a consisté à **classifier les avis en “Positif” ou “Négatif”**.  
-Cette classification a été réalisée en analysant les colonnes de **notation globale (`overall-rating`)** :
-
-- Avis **positif** : note ≥ 7/10
-- Avis **négatif** : note ≤ 4/10
-- Les notes intermédiaires sont considérés comme des avis **neutre**
-
-Cela a permis de visualiser les tendances par tranche d’âge, genre, ou condition, et d’observer des différences notables dans la perception du médicament.
-
----
-
-## 🧵 Extraction de thématiques
-
-Deux approches ont été testées pour identifier les thèmes récurrents dans les textes sachant que l'on est sur des méthodes non-supervisés : 
-
-### 1. LDA (Latent Dirichlet Allocation)
-
-- Approche probabiliste classique
-- Textes nettoyés et vectorisés avec `CountVectorizer`
-- Il est possible de tester l'influence du nombre de topics à extraire et de mots-clés dominants par topic
-- Des exemples d’avis représentatifs sont présentés pour chaque sujet
-
-#### Fonctionnement du modèle :
-LDA analyse la répétabilité des mots dans les documents pour découvrir des groupes de termes qui reviennent souvent ensemble. 
-
-🔍 **Limite** : 
-- LDA ne comprend pas le sens des mots (pas de contexte), il ne fait qu’analyser des fréquences. Il fonctionne donc mieux sur des textes longs et bien structurés.
-- les topics restent parfois trop généraux, mélangeant symptômes, effets indésirables
-
-### 2. BERTopic (avec Sentence-BERT)
-
-- Utilisation du modèle `all-MiniLM-L12-v2` pour encoder les phrases (possibilité de choisir: MPNet ou paraphrase)
-
-#### Fonctionnement du modèle :
-BERTopic est un modèle de clustering de textes basé sur l'encodage sémantique (via BERT ou SentenceTransformer).
-Il convertit chaque avis en un vecteur qui capture son sens global, puis groupe ces vecteurs pour identifier des topics récurrents.
-
-📌 **Amélioration proposée** :
-Pour une analyse plus fine, il est envisageable de :
-
-- **Séparer les avis positifs et négatifs** avant de lancer BERTopic, pour éviter que des sentiments opposés apparaissent dans un même topic.
-- **Ajouter une couche de détection d’opinion phrase-par-phrase** (avec un modèle comme RoBERTa finetuné sur des phrases d’avis médicaux) afin de segmenter finement les retours.
-
----
-
-## ✅ Résultats
-
-- Des thématiques ont émergé mais ne sont pas encore bien définis : troubles du sommeil, prise de poids, dosage trop important
-- Il n'y a pas d'avis tranchés sur l'efficacité de ce médicament. Beaucoup d'effets secondaires mais il fonctionne sur certaines personnes sans être capable de définir la raison.
-
----
-
-## 🚧 Pistes d'amélioration
-
-### 📉 Limites actuelles
-
-- LDA ne parvient pas toujours à produire des topics distincts
-- BERTopic peut mélanger des opinions opposées dans un même cluster
-- La classification positive/négative repose sur une simple règle de seuil de note
-
-### 🚀 Améliorations envisagées
-
-- Utiliser un **modèle de sentiment pré-entraîné** (RoBERTa, DistilBERT) pour classer chaque phrase individuellement
-- Appliquer **BERTopic uniquement sur les avis négatifs** pour mieux identifier les problèmes majeurs
-- Étiqueter manuellement un sous-ensemble pour un **finetuning supervisé**
-- Explorer **Top2Vec**, **KeyBERT**, ou des méthodes hybrides pour améliorer la cohérence des thématiques
-- Extraction de motif: Utiliser des modèles sequence-to-sequence (T5, BART) pour résumer ou extraire les problèmes mentionnés.
-- Recherche des modèles pertinent à intégrer sur Hugging Face
-
----
-
-## 💻 Démarrage rapide
-
-```bash
-git clone https://github.com/votre-utilisateur/abilify-nlp-analysis.git
-cd abilify-nlp-analysis
-pip install -r requirements.txt
-streamlit run app.py
-```
-
+## Références et Liens
+- **Sources de données** :
+  - [Dataset sur Kaggle: Abilify-oral-reviews-dataset](https://www.kaggle.com/datasets/joyshil0599/abilify-oral-reviews-dataset?resource=download)
+- **Liens vers le code ou les visualisations** :
+  - [Lien vers le code](https://github.com)
+  - [Lien vers les visualisations](https://streamlit.io)
