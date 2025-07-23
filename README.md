@@ -18,14 +18,19 @@ L’objectif est d’identifier automatiquement les sentiments exprimés dans le
   - BERTopic pour la détection de thématiques avancées
   - Sentence-Transformers pour l’encodage sémantique
   - Seaborn / Matplotlib pour les visualisations
-  - Streamlit pour le dashboard interactif
-
+  - Streamlit pour le dashboard interactif [Streamlit Dashboard](https://abilify-sentiment-app-gxcwthycjesnveq6mosldv.streamlit.app/)
+ 
 - **Processus** :
   1. Récupération du dataset sur Kaggle : Abilify-oral-reviews-dataset incluant description-text, age, gender, condition, sentiment, etc.
   2. Classification des avis en “Positif” ou “Négatif” en analysant les colonnes de notation globale (overall-rating).
   3. Visualisation des tendances par tranche d’âge, genre, ou condition.
   4. Extraction de topics en utilisant LDA et BERTopic.
   5. Analyse des résultats et identification des thèmes récurrents.
+ 
+<img width="500" height="825" alt="image" src="https://github.com/user-attachments/assets/8573e3f2-a44b-4cfb-9f51-b5bac8ac8f77" />
+
+<img width="500" height="741" alt="image" src="https://github.com/user-attachments/assets/8cb2f406-61b3-4534-ae00-abf566e56303" />
+
 
 ## Analyse et Résultats
 - **Analyse des données** :
@@ -54,6 +59,18 @@ Les méthodes de NLP classiques et modernes ont été comparées pour extraire d
 - **Leçons apprises** :
   - L'importance de combiner différentes méthodes de NLP pour obtenir des résultats plus précis.
   - La nécessité de continuer à améliorer les modèles pour mieux comprendre les retours patients.
+
+## 🚀 Comment démarrer
+
+1. Clonez le dépôt
+2. Installez les dépendances :
+```bash
+pip install -r requirements.txt
+```
+3. Lancez le dashboard :
+```bash
+streamlit run app.py
+```
 
 ## Références et Liens
 - **Sources de données** :
